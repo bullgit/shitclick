@@ -20,11 +20,12 @@ The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is curren
 - Add more upgrades before public release
 - Replace compass with gulp.js for SASS and Coffee precompiling
 - Prevent collecting cookies when app is closed
-- Increase auto-collecting speed
+- Add auto-save script every X seconds (better performance)
 
 ### Changelog
 
 - **v0.1.1-a** (27 Aug. 2014):
+  - Increased auto-collecting speed
   - Added favicon for desktop mode
   - New upgrade price calculation
   - Format number output

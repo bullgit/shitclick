@@ -14,7 +14,7 @@ app =
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "Increase shit per click"
         level: 0
-        cost: 2500
+        cost: 5000
         sps: 0
       1:
         name: "Upgrade 1"
@@ -84,8 +84,8 @@ app =
       @game = savegame
       # clearInterval(@game.autoclick_interval)
       @game.autoclick_interval = setInterval (->
-        app.add_shit(app.game.sps)
-      ), 1000
+        app.add_shit(app.game.sps / 10)
+      ), 100
       @refresh_shit()
       @load_upgrades()
 
@@ -120,7 +120,7 @@ app =
     while i < upgrade.level
       result += result * 0.3
       i++
-    @format_number(Math.round(result))
+    Math.round(result)
 
   refresh_shit: ->
     shit = @format_number(@game.shit_amount)
@@ -146,7 +146,10 @@ app =
         if (i + 1) % 3 is 0
           new_t += ","
         i++
-      final = new_t.split("").reverse().join("") + d
+      new_t = new_t.split("").reverse().join("")
+      if new_t[0] is ","
+        new_t = new_t.substring(1)
+      final = new_t + d
     else
       n
 
@@ -166,7 +169,6 @@ app =
       @game.shit_amount -= @get_price(@game.upgrades[upgrade])
       @game.upgrades[upgrade].level++
       @load_upgrades()
-      @check_prices()
       @refresh_shit()
       @save_game()
       @use_upgrade(upgrade)
@@ -174,13 +176,13 @@ app =
   use_upgrade: (upgrade) ->
     switch upgrade
       when 0
-        @game.spc = @game.spc + (@game.spc / 2)
+        @game.spc *= 2
       else
         @game.sps += @game.upgrades[upgrade].sps
         clearInterval(@game.autoclick_interval)
         @game.autoclick_interval = setInterval (->
-          app.add_shit(app.game.sps)
-        ), 1000
+          app.add_shit(app.game.sps / 10)
+        ), 100
     @refresh_shit()
 
   load_upgrades: ->
@@ -188,7 +190,7 @@ app =
     $.each @game.upgrades, (key, value) ->
       $(".upgrades").append "<div class='upgrade upgrade-"+key+"' data-upgrade='"+key+"'>" +
           "<h3>"+value.name+"<span>"+value.level+"</span></h3>" +
-          "<p class='info'><strong>"+app.get_price(value)+"</strong> — "+value.desc+"</p>" +
+          "<p class='info'><strong>"+app.format_number(app.get_price(value))+"</strong> — "+value.desc+"</p>" +
           "<div class='btn-buy-upgrade' data-upgrade='"+key+"'>Buy</div>" +
           # "<div class='btn-sell-upgrade' data-upgrade='"+key+"'>Sell</div>" +
           "<p class='effect'>"+value.effect+"</p>" +

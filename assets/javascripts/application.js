@@ -19,7 +19,7 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "Increase shit per click",
           level: 0,
-          cost: 2500,
+          cost: 5000,
           sps: 0
         },
         1: {
@@ -98,8 +98,8 @@
         savegame = JSON.parse(atob(localStorage["shitclick_savegame"]));
         this.game = savegame;
         this.game.autoclick_interval = setInterval((function() {
-          return app.add_shit(app.game.sps);
-        }), 1000);
+          return app.add_shit(app.game.sps / 10);
+        }), 100);
         this.refresh_shit();
         return this.load_upgrades();
       }
@@ -142,7 +142,7 @@
         result += result * 0.3;
         i++;
       }
-      return this.format_number(Math.round(result));
+      return Math.round(result);
     },
     refresh_shit: function() {
       var shit;
@@ -172,7 +172,11 @@
           }
           i++;
         }
-        return final = new_t.split("").reverse().join("") + d;
+        new_t = new_t.split("").reverse().join("");
+        if (new_t[0] === ",") {
+          new_t = new_t.substring(1);
+        }
+        return final = new_t + d;
       } else {
         return n;
       }
@@ -195,7 +199,6 @@
         this.game.shit_amount -= this.get_price(this.game.upgrades[upgrade]);
         this.game.upgrades[upgrade].level++;
         this.load_upgrades();
-        this.check_prices();
         this.refresh_shit();
         this.save_game();
         return this.use_upgrade(upgrade);
@@ -204,21 +207,21 @@
     use_upgrade: function(upgrade) {
       switch (upgrade) {
         case 0:
-          this.game.spc = this.game.spc + (this.game.spc / 2);
+          this.game.spc *= 2;
           break;
         default:
           this.game.sps += this.game.upgrades[upgrade].sps;
           clearInterval(this.game.autoclick_interval);
           this.game.autoclick_interval = setInterval((function() {
-            return app.add_shit(app.game.sps);
-          }), 1000);
+            return app.add_shit(app.game.sps / 10);
+          }), 100);
       }
       return this.refresh_shit();
     },
     load_upgrades: function() {
       $(".upgrades").html("");
       $.each(this.game.upgrades, function(key, value) {
-        return $(".upgrades").append("<div class='upgrade upgrade-" + key + "' data-upgrade='" + key + "'>" + "<h3>" + value.name + "<span>" + value.level + "</span></h3>" + "<p class='info'><strong>" + app.get_price(value) + "</strong> — " + value.desc + "</p>" + "<div class='btn-buy-upgrade' data-upgrade='" + key + "'>Buy</div>" + "<p class='effect'>" + value.effect + "</p>" + "</div>");
+        return $(".upgrades").append("<div class='upgrade upgrade-" + key + "' data-upgrade='" + key + "'>" + "<h3>" + value.name + "<span>" + value.level + "</span></h3>" + "<p class='info'><strong>" + app.format_number(app.get_price(value)) + "</strong> — " + value.desc + "</p>" + "<div class='btn-buy-upgrade' data-upgrade='" + key + "'>Buy</div>" + "<p class='effect'>" + value.effect + "</p>" + "</div>");
       });
       return this.check_prices();
     }
