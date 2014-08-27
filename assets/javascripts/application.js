@@ -120,6 +120,13 @@
         return console.log("SHITCLICK: No existing game found!");
       }
     },
+    reset_game: function() {
+      clearInterval(this.save_interval);
+      clearInterval(this.game.autoclick_interval);
+      localStorage.removeItem("shitclick_savegame");
+      console.log("SHITCLICK: The game has successfully been resettet!");
+      return console.log("SHITCLICK: Please refresh the page!");
+    },
     autosave: function() {
       return this.save_interval = setInterval((function() {
         app.save_game();

@@ -102,6 +102,13 @@ app =
     else
       console.log "SHITCLICK: No existing game found!"
 
+  reset_game: ->
+    clearInterval(@save_interval)
+    clearInterval(@game.autoclick_interval)
+    localStorage.removeItem("shitclick_savegame")
+    console.log "SHITCLICK: The game has successfully been resettet!"
+    console.log "SHITCLICK: Please refresh the page!"
+
   autosave: ->
     @save_interval = setInterval (->
       app.save_game()
