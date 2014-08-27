@@ -1,0 +1,200 @@
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800")
+@import url("http://weloveiconfonts.com/api/?family=entypo")
+
+/* entypo */
+[class*="entypo-"]:before
+  font-family: 'entypo', sans-serif
+
+$blue: #1393d5
+
+@mixin vendor($a, $v)
+  -webkit-#{$a}: $v
+  -khtml-#{$a}: $v
+  -moz-#{$a}: $v
+  -ms-#{$a}: $v
+  -o-#{$a}: $v
+  #{$a}: $v
+
+@mixin clearfix()
+  content: ""
+  clear: both
+  display: table
+
+*, *:focus
+  margin: 0
+  padding: 0
+  border: 0
+  outline: 0
+  @include vendor(box-sizing, border-box)
+  @include vendor(user-select, none)
+
+html, body
+  height: 100%
+
+body
+  background: linear-gradient(#222222,#444444)
+  font-family: 'Open Sans', sans-serif
+
+::selection
+  background: transparent
+::-moz-selection
+  background: transparent
+::-webkit-selection
+  background: transparent
+
+a
+  border: 0
+
+header
+  width: 100%
+  height: 75px
+  background-color: #fff
+  text-align: center
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 1
+  .shit-amount
+    height: 75px
+    line-height: 75px
+    font-weight: 800
+    font-size: 40px
+    &:after
+      content: ""
+      background-image: url(../images/shit.svg)
+      background-size: 50% 50%
+      background-repeat: no-repeat
+      background-position: center
+      width: 75px
+      height: 75px
+      display: inline-block
+      position: absolute
+  .sps
+    height: 30px
+    line-height: 30px
+    font-size: 15px
+    position: absolute
+    right: 20px
+    bottom: -30px
+    color: $blue
+
+.amount-added-info
+  position: absolute
+  font-size: 30px
+  color: $blue
+  font-weight: 800
+
+.btn-shit
+  position: absolute
+  z-index: 0
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  margin: auto
+  width: 100%
+  height: 100%
+  background-image: url(../images/shit.svg)
+  background-size: 50% 50%
+  background-position: center
+  background-repeat: no-repeat
+  cursor: pointer
+  &:active
+    transform: scale(0.9)
+
+footer
+  width: 100%
+  height: 75px
+  background-color: #fff
+  line-height: 75px
+  text-align: center
+  position: fixed
+  z-index: 1
+  left: 0
+  bottom: 0
+  text-transform: uppercase
+  font-weight: 800
+  font-size: 40px
+  cursor: pointer
+
+.upgrades
+  position: fixed
+  width: 50%
+  height: 50%
+  padding: 0 20px
+  overflow-y: scroll
+  background-color: #fff
+  border: 5px solid $blue
+  box-shadow: 0 0 10px #000
+  margin: auto
+  top: 150%
+  left: 0
+  right: 0
+  bottom: 0
+  .upgrade
+    width: 100%
+    padding: 20px 0
+    h3
+      font-weight: 800
+      font-size: 20px
+      span
+        font-weight: 400
+        color: $blue
+        float: right
+      &:after
+        @include clearfix()
+    .info
+      color: #999
+      height: 25px
+      line-height: 25px
+      margin-bottom: 5px
+      strong
+        font-weight: 800
+        color: #000
+        padding-right: 25px
+        display: inline-block
+        &:after
+          content: ""
+          background-image: url(../images/shit.svg)
+          background-size: 80% 80%
+          background-repeat: no-repeat
+          background-position: center
+          width: 25px
+          height: 25px
+          display: inline-block
+          position: absolute
+    .btn-buy-upgrade, .btn-sell-upgrade
+      float: left
+      padding: 5px 10px
+      background-color: #bbb
+      border: 1px solid #aaa
+      border-radius: 5px
+      text-shadow: -1px -1px 0px #aaa
+      cursor: pointer
+      font-weight: 600
+      margin-right: 5px
+      color: #fff
+      height: 34px
+      &.disabled
+        background-color: #444
+        border-color: #333
+        text-shadow: -1px -1px 0px #333
+        &:active
+          background-color: #444
+          border-color: #333
+      &:active
+        background-color: #999
+        border-color: #888
+    .effect
+      height: 34px
+      line-height: 34px
+      float: right
+      color: #999
+    &:after
+      @include clearfix()
+    &+.upgrade
+      border-top: 2px solid #f4f4f4
+
+@media screen and (max-width: 600px)
+  .upgrades
+    width: 100%

@@ -1,0 +1,17 @@
+/* TEAM */
+Name: Max Boll
+Website: http://myxotod.com
+Twitter: @MyXoToD
+Location: Mayence, Germany
+
+              
+/* THANKS */
+Name: Bullgit Dev Team
+Website: http://bullg.it
+
+
+/* SITE */
+Last update: 2014/08/27
+Standards: HTML5, SASS, CoffeeScript, JavaScript, CSS3, Compass
+Components: jQuery
+Software: Ubuntu, Sublime Text 3, Intel XDK, Google Chrome
