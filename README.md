@@ -16,17 +16,21 @@ The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is curren
 - Change shit click animation from CSS to Javascript (not working in-app)
 - Add more upgrades before public release
 - Replace compass with gulp.js for SASS and Coffee precompiling
-- ~~Save game to local storage~~
-- ~~Load savegame from local storage~~
+- Adjust price calculation
+- Prevent collecting cookies when app is closed
+- Add favicon for desktop mode
 
 ### Changelog
 
-- **v0.1.1-a**:
-  - Added localStorage save/load function
+- **v0.1.1-a** (27 Aug. 2014):
+  - Format number output
+  - Add current shit amount to `title` for desktop mode
+  - Save game to local storage
+  - Load savegame from local storage
   - Added some more upgrades due to testing
   - Added app object to window for better debugging
 
-- **v0.1.0-a**:
+- **v0.1.0-a** (07 Aug. 2014):
   - Created the game (LOL!)
 
 ### Contributors

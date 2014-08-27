@@ -144,8 +144,37 @@
       return result;
     },
     refresh_shit: function() {
-      $(".shit-amount").html(Math.round(this.game.shit_amount * 10) / 10);
-      return $(".sps").html(Math.round(this.game.sps * 10) / 10 + " Shit / Second");
+      var shit;
+      shit = this.format_number(this.game.shit_amount);
+      $(".shit-amount").html(shit);
+      $(".sps").html(this.format_number(this.game.sps) + " Shit / Second");
+      return window.document.title = shit + " // Shitclick!";
+    },
+    format_number: function(n) {
+      var d, final, i, n_arr, new_t, t;
+      n = Math.round(n * 10) / 10;
+      n = n.toString();
+      n_arr = n.split(".");
+      t = n_arr[0].split("").reverse().join("");
+      if (t.length > 3) {
+        if (n_arr[1]) {
+          d = "." + n_arr[1];
+        } else {
+          d = "";
+        }
+        i = 0;
+        new_t = "";
+        while (i < t.length) {
+          new_t += t[i];
+          if ((i + 1) % 3 === 0) {
+            new_t += ",";
+          }
+          i++;
+        }
+        return final = new_t.split("").reverse().join("") + d;
+      } else {
+        return n;
+      }
     },
     show_amount_added: function(e, amount) {
       var info;
