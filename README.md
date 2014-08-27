@@ -4,8 +4,8 @@ Shitclick is a very simple but fun game. It is all about clicking and collecting
 
 The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is currently developed by his very own [Bullgit team](http://bullg.it).
 
-![Current Version](http://img.shields.io/badge/Version-v0.1.1--a-orange.svg)
-![Release Date](http://img.shields.io/badge/Release%20Date-TBA-orange.svg)
+![Current Version](http://img.shields.io/badge/Version-v0.1.1--a-orange.svg)<br />
+![Release Date](http://img.shields.io/badge/Release%20Date-TBA-orange.svg)<br />
 ![Powered by](http://img.shields.io/badge/Powered%20by-Bullg.it-blue.svg)
 
 
