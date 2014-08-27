@@ -19,13 +19,14 @@ The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is curren
 - Change shit click animation from CSS to Javascript (not working in-app)
 - Add more upgrades before public release
 - Replace compass with gulp.js for SASS and Coffee precompiling
-- Adjust price calculation
 - Prevent collecting cookies when app is closed
 - Add favicon for desktop mode
+- Increase auto-collecting speed
 
 ### Changelog
 
 - **v0.1.1-a** (27 Aug. 2014):
+  - New upgrade price calculation
   - Format number output
   - Add current shit amount to `title` for desktop mode
   - Save game to local storage

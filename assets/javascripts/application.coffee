@@ -79,11 +79,11 @@ app =
     localStorage["shitclick_savegame"] = btoa(JSON.stringify(@game))
 
   load_game: ->
-    if localStorage.shitclick_shit != undefined
+    if localStorage["shitclick_savegame"] != undefined
       savegame = JSON.parse(atob(localStorage["shitclick_savegame"]))
       @game = savegame
-      clearInterval(@game.autoclick_interval)
-      @autoclick_interval = setInterval (->
+      # clearInterval(@game.autoclick_interval)
+      @game.autoclick_interval = setInterval (->
         app.add_shit(app.game.sps)
       ), 1000
       @refresh_shit()
@@ -115,10 +115,12 @@ app =
         $(".upgrade-"+key+" .btn-buy-upgrade").addClass("disabled")
 
   get_price: (upgrade) ->
-    result = ((upgrade.level + 1) * upgrade.cost) * (upgrade.level + 1)
-    if (upgrade.level + 1) > 10
-      result *= 2
-    result
+    result = upgrade.cost
+    i = 0
+    while i < upgrade.level + 1
+      result += result * 0.3
+      i++
+    @format_number(Math.round(result))
 
   refresh_shit: ->
     shit = @format_number(@game.shit_amount)
@@ -176,7 +178,7 @@ app =
       else
         @game.sps += @game.upgrades[upgrade].sps
         clearInterval(@game.autoclick_interval)
-        @autoclick_interval = setInterval (->
+        @game.autoclick_interval = setInterval (->
           app.add_shit(app.game.sps)
         ), 1000
     @refresh_shit()

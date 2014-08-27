@@ -94,11 +94,10 @@
     },
     load_game: function() {
       var savegame;
-      if (localStorage.shitclick_shit !== void 0) {
+      if (localStorage["shitclick_savegame"] !== void 0) {
         savegame = JSON.parse(atob(localStorage["shitclick_savegame"]));
         this.game = savegame;
-        clearInterval(this.game.autoclick_interval);
-        this.autoclick_interval = setInterval((function() {
+        this.game.autoclick_interval = setInterval((function() {
           return app.add_shit(app.game.sps);
         }), 1000);
         this.refresh_shit();
@@ -136,12 +135,14 @@
       });
     },
     get_price: function(upgrade) {
-      var result;
-      result = ((upgrade.level + 1) * upgrade.cost) * (upgrade.level + 1);
-      if ((upgrade.level + 1) > 10) {
-        result *= 2;
+      var i, result;
+      result = upgrade.cost;
+      i = 0;
+      while (i < upgrade.level + 1) {
+        result += result * 0.3;
+        i++;
       }
-      return result;
+      return this.format_number(Math.round(result));
     },
     refresh_shit: function() {
       var shit;
@@ -208,7 +209,7 @@
         default:
           this.game.sps += this.game.upgrades[upgrade].sps;
           clearInterval(this.game.autoclick_interval);
-          this.autoclick_interval = setInterval((function() {
+          this.game.autoclick_interval = setInterval((function() {
             return app.add_shit(app.game.sps);
           }), 1000);
       }
