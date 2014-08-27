@@ -138,7 +138,7 @@
       var i, result;
       result = upgrade.cost;
       i = 0;
-      while (i < upgrade.level + 1) {
+      while (i < upgrade.level) {
         result += result * 0.3;
         i++;
       }
@@ -218,7 +218,7 @@
     load_upgrades: function() {
       $(".upgrades").html("");
       $.each(this.game.upgrades, function(key, value) {
-        return $(".upgrades").append("<div class='upgrade upgrade-" + key + "' data-upgrade='" + key + "'>" + "<h3>" + value.name + "<span>" + value.level + "</span></h3>" + "<p class='info'><strong>" + app.get_price(value) + "</strong> — " + value.desc + "</p>" + "<div class='btn-buy-upgrade' data-upgrade='" + key + "'>Buy</div>" + "<div class='btn-sell-upgrade' data-upgrade='" + key + "'>Sell</div>" + "<p class='effect'>" + value.effect + "</p>" + "</div>");
+        return $(".upgrades").append("<div class='upgrade upgrade-" + key + "' data-upgrade='" + key + "'>" + "<h3>" + value.name + "<span>" + value.level + "</span></h3>" + "<p class='info'><strong>" + app.get_price(value) + "</strong> — " + value.desc + "</p>" + "<div class='btn-buy-upgrade' data-upgrade='" + key + "'>Buy</div>" + "<p class='effect'>" + value.effect + "</p>" + "</div>");
       });
       return this.check_prices();
     }

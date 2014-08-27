@@ -117,7 +117,7 @@ app =
   get_price: (upgrade) ->
     result = upgrade.cost
     i = 0
-    while i < upgrade.level + 1
+    while i < upgrade.level
       result += result * 0.3
       i++
     @format_number(Math.round(result))
@@ -190,7 +190,7 @@ app =
           "<h3>"+value.name+"<span>"+value.level+"</span></h3>" +
           "<p class='info'><strong>"+app.get_price(value)+"</strong> — "+value.desc+"</p>" +
           "<div class='btn-buy-upgrade' data-upgrade='"+key+"'>Buy</div>" +
-          "<div class='btn-sell-upgrade' data-upgrade='"+key+"'>Sell</div>" +
+          # "<div class='btn-sell-upgrade' data-upgrade='"+key+"'>Sell</div>" +
           "<p class='effect'>"+value.effect+"</p>" +
         "</div>"
     @check_prices()
