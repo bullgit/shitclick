@@ -115,7 +115,23 @@ footer
   text-transform: uppercase
   font-weight: 800
   font-size: 40px
-  cursor: pointer
+  .btn
+    cursor: pointer
+    display: inline-block
+    width: 75px
+    height: 75px
+    text-align: center
+    @include vendor(transition, all .3s ease)
+    &.active
+      color: $blue
+    &.btn-settings
+      position: absolute
+      right: 0
+      top: 0
+    &.btn-scores
+      position: absolute
+      left: 0
+      top: 0
 
 .upgrades
   position: fixed

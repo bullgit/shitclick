@@ -3,6 +3,7 @@ $(document).ready ->
   window.app = app; # Enable Console Debugging
 
 app =
+  save_interval: ""
   game:
     shit_amount: 0
     spc: 1
@@ -21,48 +22,56 @@ app =
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "+0.2 Shit per second"
         level: 0
-        cost: 10
+        cost: 20
         sps: 0.2
       2:
         name: "Upgrade 2"
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "+1 Shit per second"
         level: 0
-        cost: 45
+        cost: 90
         sps: 1
       3:
         name: "Upgrade 3"
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "+3 Shit per second"
         level: 0
-        cost: 100
+        cost: 250
         sps: 3
       4:
         name: "Upgrade 4"
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "+10 Shit per second"
         level: 0
-        cost: 800
+        cost: 900
         sps: 10
       5:
         name: "Upgrade 5"
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "+30 Shit per second"
         level: 0
-        cost: 1500
+        cost: 2500
         sps: 30
       6:
         name: "Upgrade 6"
         desc: "Lorem Ipsum Dolor Sit Amet ..."
         effect: "+100 Shit per second"
         level: 0
-        cost: 5000
+        cost: 8000
         sps: 100
+      7:
+        name: "Upgrade 7"
+        desc: "Lorem Ipsum Dolor Sit Amet ..."
+        effect: "+1,000 Shit per second"
+        level: 0
+        cost: 70000
+        sps: 1000
 
   init: ->
     @bind_events()
     @load_upgrades()
     @load_game()
+    @autosave()
 
   bind_events: ->
     $(document).on "click", ".btn-shit", (e) ->
@@ -79,19 +88,29 @@ app =
     localStorage["shitclick_savegame"] = btoa(JSON.stringify(@game))
 
   load_game: ->
-    if localStorage["shitclick_savegame"] != undefined
-      savegame = JSON.parse(atob(localStorage["shitclick_savegame"]))
+    savegame = localStorage["shitclick_savegame"] or ""
+    if savegame != ""
+      savegame = JSON.parse(atob(savegame))
       @game = savegame
-      # clearInterval(@game.autoclick_interval)
-      @game.autoclick_interval = setInterval (->
-        app.add_shit(app.game.sps / 10)
-      ), 100
+      if app.game.sps > 0
+        @game.autoclick_interval = setInterval (->
+          app.add_shit(app.game.sps / 10)
+        ), 100
       @refresh_shit()
       @load_upgrades()
+      console.log "SHITCLICK: Existing game loaded!"
+    else
+      console.log "SHITCLICK: No existing game found!"
+
+  autosave: ->
+    @save_interval = setInterval (->
+      app.save_game()
+      console.log "SHITCLICK: Game saved!"
+    ), 5000
 
   toggle_upgrades: ->
     $(".upgrades").stop()
-    $(".btn-upgrades").toggleClass("entypo-plus").toggleClass("entypo-minus")
+    $(".btn-upgrades").toggleClass("active")
     if $(".upgrades").data("open") is "no"
       $(".upgrades").animate
         top: "0%"
@@ -105,7 +124,6 @@ app =
     @game.shit_amount += amount
     @check_prices()
     @refresh_shit()
-    @save_game()
 
   check_prices: ->
     $.each @game.upgrades, (key, value) ->
@@ -170,7 +188,6 @@ app =
       @game.upgrades[upgrade].level++
       @load_upgrades()
       @refresh_shit()
-      @save_game()
       @use_upgrade(upgrade)
 
   use_upgrade: (upgrade) ->

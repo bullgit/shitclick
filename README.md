@@ -21,6 +21,7 @@ The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is curren
 - Replace compass with gulp.js for SASS and Coffee precompiling
 - Prevent collecting cookies when app is closed
 - Add auto-save script every X seconds (better performance)
+- Add shit miltiplier on fast click-rate
 
 ### Changelog
 

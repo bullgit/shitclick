@@ -8,6 +8,7 @@
   });
 
   app = {
+    save_interval: "",
     game: {
       shit_amount: 0,
       spc: 1,
@@ -27,7 +28,7 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "+0.2 Shit per second",
           level: 0,
-          cost: 10,
+          cost: 20,
           sps: 0.2
         },
         2: {
@@ -35,7 +36,7 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "+1 Shit per second",
           level: 0,
-          cost: 45,
+          cost: 90,
           sps: 1
         },
         3: {
@@ -43,7 +44,7 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "+3 Shit per second",
           level: 0,
-          cost: 100,
+          cost: 250,
           sps: 3
         },
         4: {
@@ -51,7 +52,7 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "+10 Shit per second",
           level: 0,
-          cost: 800,
+          cost: 900,
           sps: 10
         },
         5: {
@@ -59,7 +60,7 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "+30 Shit per second",
           level: 0,
-          cost: 1500,
+          cost: 2500,
           sps: 30
         },
         6: {
@@ -67,15 +68,24 @@
           desc: "Lorem Ipsum Dolor Sit Amet ...",
           effect: "+100 Shit per second",
           level: 0,
-          cost: 5000,
+          cost: 8000,
           sps: 100
+        },
+        7: {
+          name: "Upgrade 7",
+          desc: "Lorem Ipsum Dolor Sit Amet ...",
+          effect: "+1,000 Shit per second",
+          level: 0,
+          cost: 70000,
+          sps: 1000
         }
       }
     },
     init: function() {
       this.bind_events();
       this.load_upgrades();
-      return this.load_game();
+      this.load_game();
+      return this.autosave();
     },
     bind_events: function() {
       $(document).on("click", ".btn-shit", function(e) {
@@ -94,19 +104,31 @@
     },
     load_game: function() {
       var savegame;
-      if (localStorage["shitclick_savegame"] !== void 0) {
-        savegame = JSON.parse(atob(localStorage["shitclick_savegame"]));
+      savegame = localStorage["shitclick_savegame"] || "";
+      if (savegame !== "") {
+        savegame = JSON.parse(atob(savegame));
         this.game = savegame;
-        this.game.autoclick_interval = setInterval((function() {
-          return app.add_shit(app.game.sps / 10);
-        }), 100);
+        if (app.game.sps > 0) {
+          this.game.autoclick_interval = setInterval((function() {
+            return app.add_shit(app.game.sps / 10);
+          }), 100);
+        }
         this.refresh_shit();
-        return this.load_upgrades();
+        this.load_upgrades();
+        return console.log("SHITCLICK: Existing game loaded!");
+      } else {
+        return console.log("SHITCLICK: No existing game found!");
       }
+    },
+    autosave: function() {
+      return this.save_interval = setInterval((function() {
+        app.save_game();
+        return console.log("SHITCLICK: Game saved!");
+      }), 5000);
     },
     toggle_upgrades: function() {
       $(".upgrades").stop();
-      $(".btn-upgrades").toggleClass("entypo-plus").toggleClass("entypo-minus");
+      $(".btn-upgrades").toggleClass("active");
       if ($(".upgrades").data("open") === "no") {
         $(".upgrades").animate({
           top: "0%"
@@ -122,8 +144,7 @@
     add_shit: function(amount) {
       this.game.shit_amount += amount;
       this.check_prices();
-      this.refresh_shit();
-      return this.save_game();
+      return this.refresh_shit();
     },
     check_prices: function() {
       return $.each(this.game.upgrades, function(key, value) {
@@ -200,7 +221,6 @@
         this.game.upgrades[upgrade].level++;
         this.load_upgrades();
         this.refresh_shit();
-        this.save_game();
         return this.use_upgrade(upgrade);
       }
     },
