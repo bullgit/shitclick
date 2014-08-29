@@ -4,8 +4,8 @@ Shitclick is a very simple but fun game. It is all about clicking and collecting
 
 The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is currently developed by his very own [Bullgit team](http://bullg.it).
 
-![Current Version](http://img.shields.io/badge/Version-v0.1.1--a-orange.svg)<br />
-![Release Date](http://img.shields.io/badge/Release%20Date-TBA-orange.svg)<br />
+![Current Version](http://img.shields.io/badge/Version-v0.1.1--a-red.svg)<br />
+![Release Date](http://img.shields.io/badge/Release%20Date-TBA-red.svg)<br />
 ![Powered by](http://img.shields.io/badge/Powered%20by-Bullg.it-blue.svg)
 
 
@@ -18,9 +18,12 @@ The game was created by [Max Boll aka MyXoToD](http://myxotod.com) but is curren
 - Disable landscape mode
 - Change shit click animation from CSS to Javascript (not working in-app)
 - Add more upgrades before public release
+- Adjust balancing
 - Replace compass with gulp.js for SASS and Coffee precompiling
-- Prevent collecting cookies when app is closed
+- Prevent collecting cookies when app is closed/standby
 - Add shit miltiplier on fast click-rate
+- Add "Durchfall"-Mode every 5 minutes for X seconds
+- Format click number
 
 ### Changelog
 
