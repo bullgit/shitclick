@@ -11,7 +11,7 @@ Website: http://bullg.it
 
 
 /* SITE */
-Last update: 2014/08/29
+Last update: 2014/09/08
 Standards: HTML5, SASS, CoffeeScript, JavaScript, CSS3, Compass
 Components: jQuery
 Software: Ubuntu, Sublime Text 3, Intel XDK, Google Chrome

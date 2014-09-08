@@ -9,6 +9,7 @@
 
   app = {
     save_interval: "",
+    diarrhea_mode: false,
     game: {
       shit_amount: 0,
       spc: 1,
@@ -84,19 +85,28 @@
     init: function() {
       this.bind_events();
       this.load_upgrades();
+      this.diarrhea();
       this.load_game();
       return this.autosave();
     },
     bind_events: function() {
       $(document).on("click", ".btn-shit", function(e) {
-        app.add_shit(app.game.spc);
-        return app.show_amount_added(e, app.game.spc);
+        var amount_to_add;
+        amount_to_add = app.game.spc;
+        if (app.diarrhea_mode === true) {
+          amount_to_add *= 10;
+        }
+        app.add_shit(amount_to_add);
+        return app.show_amount_added(e, amount_to_add);
       });
       $(document).on("click", ".btn-upgrades", function(e) {
         return app.toggle_upgrades();
       });
-      return $(document).on("click", ".btn-buy-upgrade", function(e) {
+      $(document).on("click", ".btn-buy-upgrade", function(e) {
         return app.buy_upgrade($(this).data("upgrade"));
+      });
+      return $(document).on("click", ".btn-scores, .btn-settings", function(e) {
+        return alert("These features are coming soon!");
       });
     },
     save_game: function() {
@@ -133,17 +143,34 @@
         return console.log("SHITCLICK: Game saved!");
       }), 5000);
     },
+    diarrhea: function() {
+      return $(".diarrhea-time").animate({
+        width: "100%"
+      }, 300000, function() {
+        console.log("SHITCLICK: Diarrhea Mode activated!");
+        app.diarrhea_mode = true;
+        app.refresh_shit();
+        return $(".diarrhea-time").animate({
+          width: "0%"
+        }, 20000, function() {
+          console.log("SHITCLICK: Diarrhea Mode deactivated!");
+          app.diarrhea_mode = false;
+          app.diarrhea();
+          return app.refresh_shit();
+        });
+      });
+    },
     toggle_upgrades: function() {
       $(".upgrades").stop();
       $(".btn-upgrades").toggleClass("active");
       if ($(".upgrades").data("open") === "no") {
         $(".upgrades").animate({
-          top: "0%"
+          left: "0"
         });
         return $(".upgrades").data("open", "yes");
       } else {
         $(".upgrades").animate({
-          top: "150%"
+          left: "-200%"
         });
         return $(".upgrades").data("open", "no");
       }
@@ -177,6 +204,11 @@
       shit = this.format_number(this.game.shit_amount);
       $(".shit-amount").html(shit);
       $(".sps").html(this.format_number(this.game.sps) + " Shit / Second");
+      if (this.diarrhea_mode) {
+        $(".multiplier").html("Multiplier &times;10");
+      } else {
+        $(".multiplier").html("Multiplier &times;0");
+      }
       return window.document.title = shit + " // Shitclick!";
     },
     format_number: function(n) {

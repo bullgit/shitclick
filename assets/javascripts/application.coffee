@@ -4,6 +4,7 @@ $(document).ready ->
 
 app =
   save_interval: ""
+  diarrhea_mode: false
   game:
     shit_amount: 0
     spc: 1
@@ -70,19 +71,26 @@ app =
   init: ->
     @bind_events()
     @load_upgrades()
+    @diarrhea()
     @load_game()
     @autosave()
 
   bind_events: ->
     $(document).on "click", ".btn-shit", (e) ->
-      app.add_shit(app.game.spc)
-      app.show_amount_added(e, app.game.spc)
+      amount_to_add = app.game.spc
+      if app.diarrhea_mode is true
+        amount_to_add *= 10
+      app.add_shit(amount_to_add)
+      app.show_amount_added(e, amount_to_add)
 
     $(document).on "click", ".btn-upgrades", (e) ->
       app.toggle_upgrades()
 
     $(document).on "click", ".btn-buy-upgrade", (e) ->
       app.buy_upgrade $(this).data "upgrade"
+
+    $(document).on "click", ".btn-scores, .btn-settings", (e) ->
+      alert "These features are coming soon!"
 
   save_game: ->
     localStorage["shitclick_savegame"] = btoa(JSON.stringify(@game))
@@ -115,16 +123,33 @@ app =
       console.log "SHITCLICK: Game saved!"
     ), 5000
 
+  diarrhea: ->
+    $(".diarrhea-time").animate
+      width: "100%"
+    , 300000, ->
+      # Start Diarrhea Mode
+      console.log "SHITCLICK: Diarrhea Mode activated!"
+      app.diarrhea_mode = true
+      app.refresh_shit()
+      $(".diarrhea-time").animate
+        width: "0%"
+      , 20000, ->
+        # Reset Diarrhea Mode
+        console.log "SHITCLICK: Diarrhea Mode deactivated!"
+        app.diarrhea_mode = false
+        app.diarrhea()
+        app.refresh_shit()
+
   toggle_upgrades: ->
     $(".upgrades").stop()
     $(".btn-upgrades").toggleClass("active")
     if $(".upgrades").data("open") is "no"
       $(".upgrades").animate
-        top: "0%"
+        left: "0"
       $(".upgrades").data("open", "yes")
     else
       $(".upgrades").animate
-        top: "150%"
+        left: "-200%"
       $(".upgrades").data("open", "no")
 
   add_shit: (amount) ->
@@ -151,6 +176,10 @@ app =
     shit = @format_number(@game.shit_amount)
     $(".shit-amount").html(shit)
     $(".sps").html(@format_number(@game.sps) + " Shit / Second")
+    if @diarrhea_mode
+      $(".multiplier").html("Multiplier &times;10")
+    else
+      $(".multiplier").html("Multiplier &times;0")
     window.document.title = shit + " // Shitclick!"
 
   format_number: (n) ->
